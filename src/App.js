@@ -1,26 +1,64 @@
 import React from 'react';
-import logo from './logo.svg';
+import Grid from '@material-ui/core/Grid';
+
+
+
+import { connect } from 'react-redux';
+import { loadLeaseList } from "./actions";
+
+// import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import ListView from './components/listView';
+import DetailView from './components/detailView';
+
+
+
+class App extends React.Component {
+
+  componentDidMount() {
+    this.props.loadLeaseList();
+  };
+
+  render() {
+
+    // console.log(JSON.stringify(this.props.data));
+
+    if (this.props.loading) {
+      return <div>Loading</div>
+    }
+
+    let data = [{id:'a', tenant:'a'}, {id:'b', tenant:'b'}]
+
+    return (
+
+      
+
+      <Grid container justify="center" spacing={2}>
+        <Grid item xs={4}>
+          {/* <ListView list={this.props.data} /> */}
+          <ListView list={data} />
+        </Grid>
+        <Grid item xs={8}>
+          <DetailView />
+        </Grid>
+      </Grid>
+
+
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  data: state.leastListReducer.data,
+  loading: state.leastListReducer.loading,
+  error: state.leastListReducer.error,
+});
+const mapDispatchToProps = {
+  loadLeaseList
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
