@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 
@@ -77,11 +76,6 @@ class ListView extends React.Component {
     }
 }
 
-//TODOTK: For reference. 
-// ListView.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//     data: PropTypes.array.isRequired
-// };
 
 const mapStateToProps = state => ({
     data: state.leaseDetailReducer.data,

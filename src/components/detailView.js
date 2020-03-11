@@ -50,7 +50,9 @@ class DetailView extends React.Component {
 
                 let currentDate = moment(startDate);
                 let key = 0;
+                // eslint-disable-next-line
                 if (currentDate.format('dddd').toLowerCase() != data.payment_day) {
+                    // eslint-disable-next-line
                     let count = moment.weekdays().findIndex((d) => d.toLowerCase() == data.payment_day) + 1;
                     row.push(
                         <CustomTableRow
