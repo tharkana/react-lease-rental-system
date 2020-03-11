@@ -27,16 +27,20 @@ class DetailView extends React.Component {
             return <div>Loading</div>
         }
 
+        if (this.props.error) {
+            return <div>Something went wrong</div>
+        }
+
         let data = this.props.data;
         //TODO: Remove this once server is up
-        data = {
-            "id": "lease-b",
-            "start_date": "2018-05-12",
-            "end_date": "2018-11-16",
-            "rent": 454,
-            "frequency": "weekly",
-            "payment_day": "tuesday"
-        };
+        // data = {
+        //     "id": "lease-b",
+        //     "start_date": "2018-05-12",
+        //     "end_date": "2018-11-16",
+        //     "rent": 454,
+        //     "frequency": "weekly",
+        //     "payment_day": "tuesday"
+        // };
 
         let row = [];
 

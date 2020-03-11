@@ -28,6 +28,10 @@ class App extends React.Component {
       return <div>Loading</div>
     }
 
+    if(this.props.error){
+      return <div>Something Went wrong</div>
+    }
+
     let data = [{id:'a', tenant:'a'}, {id:'b', tenant:'b'}]
 
     return (
@@ -36,8 +40,8 @@ class App extends React.Component {
 
       <Grid container justify="center" spacing={2}>
         <Grid item xs={3}>
-          {/* <ListView list={this.props.data} /> */}
-          <ListView list={data} />
+          <ListView list={this.props.data} />
+          {/* <ListView list={data} /> */}
         </Grid>
         <Grid item xs={9}>
           <DetailView />
