@@ -35,11 +35,11 @@ class App extends React.Component {
       
 
       <Grid container justify="center" spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           {/* <ListView list={this.props.data} /> */}
           <ListView list={data} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <DetailView />
         </Grid>
       </Grid>

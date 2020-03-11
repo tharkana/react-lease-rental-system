@@ -1,7 +1,15 @@
 import React from 'react';
 import moment from 'moment';
+
+
 import Grid from '@material-ui/core/Grid';
 import Skeleton from '@material-ui/lab/Skeleton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 import { connect } from 'react-redux';
 import { loadLeaseData } from "../actions";
@@ -24,7 +32,7 @@ class DetailView extends React.Component {
         data = {
             "id": "lease-b",
             "start_date": "2018-05-12",
-            "end_date": "2018-11-13",
+            "end_date": "2018-11-16",
             "rent": 454,
             "frequency": "weekly",
             "payment_day": "tuesday"
@@ -45,13 +53,13 @@ class DetailView extends React.Component {
                 if (currentDate.format('dddd').toLowerCase() != data.payment_day) {
                     let count = moment.weekdays().findIndex((d) => d.toLowerCase() == data.payment_day) + 1;
                     row.push(
-                        <TableRow
+                        <CustomTableRow
                             key={key++}
                             currentDate={currentDate.format(dateFormat)}
                             endDate={currentDate.add(count, "days").format(dateFormat)}
-                            days={count}
+                            days={count + 1}
                             cost={(perDayAmount * count).toFixed(2)}  >
-                        </TableRow>
+                        </CustomTableRow>
                     )
                 }
 
@@ -85,15 +93,15 @@ class DetailView extends React.Component {
                     }
 
                     if (endDate.diff(currentDate, "days") + 1 > 0) {
-                        
+
                         row.push(
-                            <TableRow
+                            <CustomTableRow
                                 key={key++}
                                 currentDate={previousDate.format(dateFormat)}
                                 endDate={currentDate.format(dateFormat)}
                                 days={currentDate.diff(previousDate, 'days') + 1}
                                 cost={data.rent * count}  >
-                            </TableRow>
+                            </CustomTableRow>
                         )
                     } else {
                         hasPassed = true;
@@ -106,37 +114,32 @@ class DetailView extends React.Component {
                 let count = endDate.diff(currentDate, 'days') + 1;
                 if (count > 0) {
                     row.push(
-                        <TableRow
+                        <CustomTableRow
                             key={key++}
                             currentDate={currentDate.format(dateFormat)}
                             endDate={endDate.format(dateFormat)}
                             days={count}
                             cost={(perDayAmount * count).toFixed(2)}  >
-                        </TableRow>
+                        </CustomTableRow>
                     )
                 }
 
                 return (
-                    <div>
-                        <Grid container >
-                            <Grid container direction="row">
-                                <Grid item xs={3}>
-                                    From
-                                </Grid>
-                                <Grid item xs={3}>
-                                    To
-                                </Grid>
-                                <Grid item xs={3}>
-                                    Days
-                                </Grid>
-                                <Grid item xs={3}>
-                                    Amount
-                                </Grid>
-                            </Grid>
-
-                        </Grid>
-                        {row}
-                    </div>
+                    <TableContainer >
+                        <Table aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center">From</TableCell>
+                                    <TableCell align="center">To</TableCell>
+                                    <TableCell align="center">Days</TableCell>
+                                    <TableCell align="center">Amount</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {row}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 )
 
 
@@ -152,20 +155,20 @@ class DetailView extends React.Component {
     }
 }
 
-function TableRow(props) {
+function CustomTableRow(props) {
 
-    if(props.currentDate){
+    if (props.currentDate) {
 
         return (
-            <Grid  container direction="row" >
-                <Grid item xs={3} >{props.currentDate}</Grid>
-                <Grid item xs={3} >{props.endDate}</Grid>
-                <Grid item xs={3} >{props.days}</Grid>
-                <Grid item xs={3} >${props.cost}</Grid>
-            </Grid>
+            <TableRow >
+                <TableCell align="center">{props.currentDate}</TableCell>
+                <TableCell align="center">{props.endDate}</TableCell>
+                <TableCell align="center">{props.days}</TableCell>
+                <TableCell align="center">{props.cost}</TableCell>
+            </TableRow>
         );
 
-    }else {
+    } else {
 
         return (
             <Grid container direction="row" >
@@ -178,7 +181,7 @@ function TableRow(props) {
 
     }
 
-    
+
 }
 
 const mapStateToProps = state => ({
